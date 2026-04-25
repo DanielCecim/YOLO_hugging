@@ -97,7 +97,35 @@ pip install ultralytics
 python detect_video.py path/to/video.mp4
 ```
 
-`detect_video.py` runs inference with `conf=0.3` and `imgsz=1280` (higher resolution improves small object detection on security camera footage). Output video is saved to `runs/detect/`.
+`detect_video.py` runs inference with `conf=0.6` and `imgsz=1280` (higher resolution improves small object detection on security camera footage). Output video is saved to `runs/detect/`.
+
+### Using a specific weights file
+
+By default the script loads `best.pt` from the current directory. To test a different checkpoint, edit the first line of `detect_video.py`:
+
+```python
+model = YOLO("best.pt")        # default
+model = YOLO("best_v4.pt")     # a specific version
+model = YOLO("test_midrun.pt") # a mid-run checkpoint downloaded during training
+```
+
+### Downloading checkpoints mid-run
+
+Checkpoints are saved to the Modal volume every 5 epochs during training. To grab the latest checkpoint without stopping the run:
+
+```bash
+# Most recent epoch
+modal volume get gun-detect-v4-runs gun-v4/weights/last.pt test_midrun.pt
+
+# Best so far
+modal volume get gun-detect-v4-runs gun-v4/weights/best.pt test_best.pt
+```
+
+Use `--force` if the file already exists locally:
+
+```bash
+modal volume get --force gun-detect-v4-runs gun-v4/weights/last.pt test_midrun.pt
+```
 
 ---
 

@@ -1,9 +1,10 @@
 from ultralytics import YOLO
 import sys
 
-model = YOLO("best.pt")
-
+weights    = sys.argv[2] if len(sys.argv) > 2 else "best.pt"
 video_path = sys.argv[1] if len(sys.argv) > 1 else 0  # 0 = webcam
+
+model = YOLO(weights)
 
 results = model.predict(
     source=video_path,
