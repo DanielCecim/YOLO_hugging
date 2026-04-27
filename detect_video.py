@@ -8,7 +8,7 @@ model = YOLO(weights)
 
 results = model.predict(
     source=video_path,
-    conf=0.6,       # higher threshold to reduce false positives on cars
+    conf=0.65,      # higher threshold to reduce false positives on cars
     iou=0.45,
     imgsz=1280,     # higher res helps detect small guns
     show=True,
